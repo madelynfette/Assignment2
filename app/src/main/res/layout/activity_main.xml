@@ -9,13 +9,13 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/list_container"
-        android:layout_width="1243dp"
+        android:layout_width="match_parent"
         android:layout_height="390dp"
         android:layout_weight="1" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/web_container"
-        android:layout_width="999dp"
+        android:layout_width="match_parent"
         android:layout_height="379dp"
         android:layout_weight="1" />
 
