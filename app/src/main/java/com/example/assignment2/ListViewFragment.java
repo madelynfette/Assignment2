@@ -2,11 +2,18 @@ package com.example.assignment2;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.LinkedList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +21,9 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class ListViewFragment extends Fragment {
+
+    ListView listView;
+    private TickerViewModel mViewModel;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -23,6 +33,7 @@ public class ListViewFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
 
     public ListViewFragment() {
         // Required empty public constructor
@@ -46,19 +57,42 @@ public class ListViewFragment extends Fragment {
         return fragment;
     }
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
-    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_list_view, container, false);
+        View fragmentList = inflater.inflate(R.layout.fragment_list_view,container,false);
+        listView = fragmentList.findViewById(R.id.list_view);
+        LinkedList<Ticker> tickers = new LinkedList<>();
+
+
+        ArrayAdapter<Ticker> adapter = new ArrayAdapter<Ticker>(getActivity(), android.R.layout.simple_list_item_1,tickers);
+        listView.setAdapter(adapter);
+        return fragmentList;
+
     }
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInsuranceState){
+        super.onActivityCreated(savedInsuranceState);
+        mViewModel = ViewModelProviders.of(getActivity()).get(TickerViewModel.class);
+        mViewModel.getTickers().observe(getViewLifecycleOwner(), new Observer<LinkedList<Ticker>>() {
+            @Override
+            public void onChanged(LinkedList<Ticker> tickers) {
+
+            ArrayAdapter<Ticker> adapter = new ArrayAdapter<Ticker>(getActivity(), android.R.layout.simple_list_item_1, tickers);
+            listView.setAdapter(adapter);
+
+            }
+        });
+    }
+
 }

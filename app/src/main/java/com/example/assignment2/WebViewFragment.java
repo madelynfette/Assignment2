@@ -2,16 +2,20 @@ package com.example.assignment2;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+
+import java.util.LinkedList;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link WebViewFragment#newInstance} factory method to
- * create an instance of this fragment.
  */
 public class WebViewFragment extends Fragment {
 
@@ -20,12 +24,16 @@ public class WebViewFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private TickerViewModel mViewModel;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
+
+
     public WebViewFragment() {
-        // Required empty public constructor
+
     }
 
     /**
@@ -51,7 +59,9 @@ public class WebViewFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mParam2 = getArguments().getString(ARG_PARAM2);;
+
+
         }
     }
 
@@ -61,4 +71,12 @@ public class WebViewFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_web_view, container, false);
     }
-}
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInsuranceState){
+        super.onActivityCreated(savedInsuranceState);
+        mViewModel = ViewModelProviders.of(getActivity()).get(TickerViewModel.class);
+
+
+            }
+
+    }
