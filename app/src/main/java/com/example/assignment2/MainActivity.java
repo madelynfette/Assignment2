@@ -3,6 +3,7 @@ package com.example.assignment2;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -15,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        sharedViewModel = ViewModelProviders.of(this).get(TickerViewModel.class);
+        sharedViewModel = new ViewModelProvider(this).get(TickerViewModel.class);
 
 
 
