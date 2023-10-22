@@ -73,7 +73,7 @@ public class ListViewFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInsuranceState){
         super.onActivityCreated(savedInsuranceState);
-        mViewModel = new ViewModelProvider(getActivity()).get(TickerViewModel.class);
+        mViewModel = new ViewModelProvider(requireActivity()).get(TickerViewModel.class);
         mViewModel.getTickers().observe(getViewLifecycleOwner(), new Observer<LinkedList<Ticker>>() {
             @Override
             public void onChanged(LinkedList<Ticker> tickers) {

@@ -61,13 +61,12 @@ public class WebViewFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInsuranceState){
         super.onActivityCreated(savedInsuranceState);
-        mViewModel = new ViewModelProvider(getActivity()).get(TickerViewModel.class);
+        mViewModel = new ViewModelProvider(requireActivity()).get(TickerViewModel.class);
         mViewModel.getTickers().observe(getViewLifecycleOwner(), new Observer<LinkedList<Ticker>>() {
             @Override
             public void onChanged(LinkedList<Ticker> tickers) {
-                ArrayAdapter<Ticker> adapter = new ArrayAdapter<Ticker>(getActivity(), android.R.layout.simple_list_item_1, mViewModel.getTickers().getValue());
+                ArrayAdapter<Ticker> adapter = new ArrayAdapter<Ticker>(requireActivity(), android.R.layout.simple_list_item_1, mViewModel.getTickers().getValue());
                 list_view.setAdapter(adapter);
-
 
             }
 
