@@ -11,6 +11,10 @@ public class Ticker {
         this.link = link;
     }
 
+    public String getLink(){
+        return link;
+    }
+
     @NonNull
     @Override
     public String toString() {

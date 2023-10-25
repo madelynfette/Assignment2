@@ -51,7 +51,7 @@ public class ListViewFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        list_view.setOnItemClickListener(listener);
+
         }
 
 
@@ -66,13 +66,15 @@ public class ListViewFragment extends Fragment {
         tickers = sharedViewModel.getTickers().getValue();
         ArrayAdapter<Ticker> adapter = new ArrayAdapter<Ticker>(requireActivity(), android.R.layout.simple_list_item_1,tickers);
         list_view.setAdapter(adapter);
+        list_view.setOnItemClickListener(listener);
         return fragmentList;
 
     }
     AdapterView.OnItemClickListener listener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            list_view.setOnItemClickListener(listener);
+            Ticker clickedTicker = (Ticker) parent.getItemAtPosition(position);
+            sharedViewModel.setSelectedTicker((clickedTicker).getLink());
 
         }
     };

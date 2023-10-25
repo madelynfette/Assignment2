@@ -13,22 +13,28 @@ public class TickerViewModel extends ViewModel {
     private MutableLiveData<LinkedList<Ticker>> tickers;
     public MutableLiveData<String>SelectedTicker;
 
-    public void setSelectedTicker(MutableLiveData<String> selectedTicker) {
+    public void setSelectedTicker(String newTicker) {
         if (SelectedTicker == null){
-            SelectedTicker = new MutableLiveData<>();}
-        SelectedTicker = selectedTicker;
-        SelectedTicker.setValue("https://seekingalpha.com");
+            SelectedTicker = new MutableLiveData<>();
+            SelectedTicker.setValue("https://seekingalpha.com");}
+            SelectedTicker.setValue(newTicker);
     }
 
-    public MutableLiveData<String> getSelectedTicker(String s) {
+    public MutableLiveData<String> getSelectedTicker() {
         if (SelectedTicker == null){
-            SelectedTicker = new MutableLiveData<>();}
-        return SelectedTicker;
+            SelectedTicker = new MutableLiveData<>();
+            SelectedTicker.setValue("https://seekingalpha.com");}
+         return SelectedTicker;
     }
 
     public MutableLiveData<LinkedList<Ticker>>getTickers(){
         if (tickers == null){
             tickers = new MutableLiveData<>();
+          LinkedList<Ticker> empty= new LinkedList<>();
+            empty.add(new Ticker("BAC","https://seekingalpha.com/symbol/BAC"));
+            empty.add(new Ticker("AAPL","https://seekingalpha.com/symbol/AAPL"));
+            empty.add(new Ticker("DIS","https://seekingalpha.com/symbol/DIS"));
+            tickers.setValue(empty);
         }
         return tickers;
     }
@@ -50,6 +56,4 @@ public class TickerViewModel extends ViewModel {
             tickers.setValue(list);
         }
     }
-
-
 }
