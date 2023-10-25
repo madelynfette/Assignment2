@@ -9,14 +9,14 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/list_container"
-        android:layout_width="549dp"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         tools:layout="@layout/fragment_list_view" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/web_container"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         tools:layout="@layout/fragment_web_view" />

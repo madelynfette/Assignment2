@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -23,7 +24,9 @@ import java.util.LinkedList;
 public class ListViewFragment extends Fragment {
 
     ListView list_view;
-    private TickerViewModel mViewModel;
+    public TickerViewModel sharedViewModel;
+
+
 
 
 
@@ -33,10 +36,6 @@ public class ListViewFragment extends Fragment {
 
     /**
      * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment ListViewFragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -52,7 +51,7 @@ public class ListViewFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        list_view.setOnItemClickListener(listener);
         }
 
 
@@ -63,23 +62,30 @@ public class ListViewFragment extends Fragment {
         View fragmentList = inflater.inflate(R.layout.fragment_list_view,container,false);
         list_view = fragmentList.findViewById(R.id.list_view);
         LinkedList<Ticker> tickers = new LinkedList<>();
-
-
-        ArrayAdapter<Ticker> adapter = new ArrayAdapter<Ticker>(getActivity(), android.R.layout.simple_list_item_1,tickers);
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(TickerViewModel.class);
+        tickers = sharedViewModel.getTickers().getValue();
+        ArrayAdapter<Ticker> adapter = new ArrayAdapter<Ticker>(requireActivity(), android.R.layout.simple_list_item_1,tickers);
         list_view.setAdapter(adapter);
         return fragmentList;
 
     }
+    AdapterView.OnItemClickListener listener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            list_view.setOnItemClickListener(listener);
+
+        }
+    };
     @Override
     public void onActivityCreated(@Nullable Bundle savedInsuranceState){
         super.onActivityCreated(savedInsuranceState);
-        mViewModel = new ViewModelProvider(requireActivity()).get(TickerViewModel.class);
-        mViewModel.getTickers().observe(getViewLifecycleOwner(), new Observer<LinkedList<Ticker>>() {
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(TickerViewModel.class);
+        sharedViewModel.getTickers().observe(getViewLifecycleOwner(), new Observer<LinkedList<Ticker>>() {
             @Override
             public void onChanged(LinkedList<Ticker> tickers) {
 
-            ArrayAdapter<Ticker> adapter = new ArrayAdapter<Ticker>(getActivity(), android.R.layout.simple_list_item_1, tickers);
-            list_view.setAdapter(adapter);
+          ArrayAdapter<Ticker> adapter = new ArrayAdapter<Ticker>(requireActivity(), android.R.layout.simple_list_item_1, tickers);
+           list_view.setAdapter(adapter);
 
             }
         });

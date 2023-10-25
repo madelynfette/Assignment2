@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
@@ -14,7 +13,10 @@ import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.net.URL;
 import java.util.LinkedList;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,7 +24,7 @@ import java.util.LinkedList;
 public class WebViewFragment extends Fragment {
 
 
-    private TickerViewModel mViewModel;
+    private TickerViewModel sharedViewModel;
     ListView list_view;
 
 
@@ -52,24 +54,33 @@ public class WebViewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
         View inflate = inflater.inflate(R.layout.fragment_web_view, container, false);
-        list_view = inflate.findViewById(R.id.list_view);
         return inflate;
     }
+
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInsuranceState){
         super.onActivityCreated(savedInsuranceState);
-        mViewModel = new ViewModelProvider(requireActivity()).get(TickerViewModel.class);
-        mViewModel.getTickers().observe(getViewLifecycleOwner(), new Observer<LinkedList<Ticker>>() {
-            @Override
-            public void onChanged(LinkedList<Ticker> tickers) {
-                ArrayAdapter<Ticker> adapter = new ArrayAdapter<Ticker>(requireActivity(), android.R.layout.simple_list_item_1, mViewModel.getTickers().getValue());
-                list_view.setAdapter(adapter);
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(TickerViewModel.class);
+
+        Observer<String<Ticker>> observer = new Observer<String<Ticker>>(){
+
+            public void onChange(String newTicker){
+             sharedViewModel.getSelectedTicker(newTicker);
+            }
+
+        };
+
+
+
 
             }
 
-        };}
+
+
+
+
 }
 
