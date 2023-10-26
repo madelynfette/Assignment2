@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 
@@ -42,6 +43,8 @@ public class InfoWebFragment extends Fragment {
 
         View inflate = inflater.inflate(R.layout.info_web_fragment, container, false);
         webview = inflate.findViewById(R.id.web_view);
+        WebSettings webSettings = webview.getSettings();
+        webSettings.setJavaScriptEnabled(true);
         webview.loadUrl("https://seekingalpha.com/");
         return inflate;
     }
@@ -54,7 +57,6 @@ public class InfoWebFragment extends Fragment {
         Observer<String> observer = new Observer<String>(){
             @Override
             public void onChanged(String s) {
-                //sharedViewModel.getSelectedTicker(s);
                 webview.loadUrl(s);
             }
 

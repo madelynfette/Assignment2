@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
                   String ticLink = "https://seekingalpha.com/symbol/"+ ticName;
                   Ticker newTick = new Ticker(ticName,ticLink);
                   sharedViewModel.addTicker(newTick);
+                  sharedViewModel.setSelectedTicker((newTick).getLink());;
               }
               else {
                   Toast.makeText(this, "The ticker you entered is invalid.", Toast.LENGTH_SHORT).show();
