@@ -16,37 +16,21 @@ import android.widget.ListView;
 
 import java.util.LinkedList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ListViewFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class ListViewFragment extends Fragment {
+public class TickerListFragment extends Fragment {
 
     ListView list_view;
     public TickerViewModel sharedViewModel;
 
-
-
-
-
-    public ListViewFragment() {
+    public TickerListFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * @return A new instance of fragment ListViewFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ListViewFragment newInstance(String param1, String param2) {
-        ListViewFragment fragment = new ListViewFragment();
+    public static TickerListFragment newInstance(String param1, String param2) {
+        TickerListFragment fragment = new TickerListFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,7 +43,7 @@ public class ListViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View fragmentList = inflater.inflate(R.layout.fragment_list_view,container,false);
+        View fragmentList = inflater.inflate(R.layout.ticker_list_fragment,container,false);
         list_view = fragmentList.findViewById(R.id.list_view);
         LinkedList<Ticker> tickers = new LinkedList<>();
         sharedViewModel = new ViewModelProvider(requireActivity()).get(TickerViewModel.class);

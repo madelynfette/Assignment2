@@ -51,7 +51,12 @@ public class TickerViewModel extends ViewModel {
     }
     public void addTicker(Ticker t){
         LinkedList<Ticker> list = tickers.getValue();
-        if(list.size() >= 6){
+        if(list.size() < 5){
+            list.add(t);
+            tickers.setValue(list);
+        }
+        if(list.size() == 5){
+            list.removeLast();
             list.add(t);
             tickers.setValue(list);
         }

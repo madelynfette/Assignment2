@@ -4,10 +4,15 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.provider.Telephony;
 import android.telephony.SmsMessage;
+import android.text.InputFilter;
+import android.text.method.TextKeyListener;
 import android.util.Log;
 import android.widget.Toast;
+
+import java.util.Locale;
 
 public class SMSReceiver extends BroadcastReceiver {
 
@@ -23,11 +28,9 @@ public class SMSReceiver extends BroadcastReceiver {
 
                 for(int i = 0; i < pdusObj.length; i++){
                     SmsMessage currentMessage = SmsMessage.createFromPdu((byte[]) pdusObj[i], format);
-                    String sender = currentMessage.getDisplayOriginatingAddress();
                     String message = currentMessage.getDisplayMessageBody();
                     String printMessage = message + " has been added";
                     Log.i("SMS", printMessage);
-                    Toast.makeText(context, printMessage, Toast.LENGTH_SHORT).show();
 
                     Intent activityIntent = new Intent(context, MainActivity.class);
                     activityIntent.putExtra("sms", message);

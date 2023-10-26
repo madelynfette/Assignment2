@@ -10,7 +10,14 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.text.InputFilter;
+import android.text.TextUtils;
+import android.widget.Toast;
+import android.widget.Toolbar;
+
+import java.text.Format;
+
+import kotlin.internal.AccessibleLateinitPropertyLiteral;
 
 public class MainActivity extends AppCompatActivity {
    private TickerViewModel sharedViewModel;
@@ -26,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
 
         sharedViewModel = new ViewModelProvider(this).get(TickerViewModel.class);
             if(savedInstanceState == null){
-                fg.beginTransaction().replace(R.id.list_container,new ListViewFragment()).commit();
-                fg.beginTransaction().replace(R.id.web_container,new WebViewFragment()).commit();
+                fg.beginTransaction().replace(R.id.list_container,new TickerListFragment()).commit();
+                fg.beginTransaction().replace(R.id.web_container,new InfoWebFragment()).commit();
                 if(ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS)
                 != PackageManager.PERMISSION_GRANTED){
                     String[] perms = new String[] {Manifest.permission.RECEIVE_SMS};
@@ -46,13 +53,30 @@ public class MainActivity extends AppCompatActivity {
       @Override
     protected void onNewIntent( Intent intent){
         super.onNewIntent(intent);
-          String ticName = intent.getStringExtra("sms");
-          if(ticName.length() > 2 && ticName.length() < 4){
-              String ticLink = "https://seekingalpha.com/symbol/" + ticName;
-              Ticker newTic = new Ticker(ticName,ticLink);
-              sharedViewModel.addTicker(newTic);
-          }
+          String smsInput = intent.getStringExtra("sms");
 
 
-      }
-}
+          if(smsInput.startsWith("Ticker:<<") && smsInput.endsWith(">>")){
+              String stepOne = smsInput.replaceFirst("Ticker:<<","");
+              String stepTwo = stepOne.replace(">>","");
+              String ticName = stepTwo.toUpperCase();
+              if (ticName.matches("[a-zA-Z]+")){
+                  String ticLink = "https://seekingalpha.com/symbol/"+ ticName;
+                  Ticker newTick = new Ticker(ticName,ticLink);
+                  sharedViewModel.addTicker(newTick);
+              }
+              else {
+                  Toast.makeText(this, "The ticker you entered is invalid.", Toast.LENGTH_SHORT).show();
+              }
+
+          } else {
+              Toast.makeText(this, "No valid watchlist entry was found.", Toast.LENGTH_SHORT).show();
+          }}}
+
+
+
+
+
+
+
+

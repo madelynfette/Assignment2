@@ -11,28 +11,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
-
-import java.net.URL;
-import java.util.LinkedList;
-import java.util.Observable;
 
 
-public class WebViewFragment extends Fragment {
+public class InfoWebFragment extends Fragment {
 
 
     private TickerViewModel sharedViewModel;
 
     WebView webview;
 
-    public WebViewFragment() {
+    public InfoWebFragment() {
 
     }
 
-    public static WebViewFragment newInstance(String param1, String param2) {
-        WebViewFragment fragment = new WebViewFragment();
+    public static InfoWebFragment newInstance(String param1, String param2) {
+        InfoWebFragment fragment = new InfoWebFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -47,9 +40,9 @@ public class WebViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View inflate = inflater.inflate(R.layout.fragment_web_view, container, false);
+        View inflate = inflater.inflate(R.layout.info_web_fragment, container, false);
         webview = inflate.findViewById(R.id.web_view);
-        webview.loadUrl("https://www.google.com/");
+        webview.loadUrl("https://seekingalpha.com/");
         return inflate;
     }
 
@@ -58,7 +51,6 @@ public class WebViewFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInsuranceState){
         super.onActivityCreated(savedInsuranceState);
         sharedViewModel = new ViewModelProvider(requireActivity()).get(TickerViewModel.class);
-
         Observer<String> observer = new Observer<String>(){
             @Override
             public void onChanged(String s) {
